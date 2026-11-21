@@ -1,0 +1,494 @@
+\documentclass[11pt]{article}
+
+%####### DON'T CHANGE MARGIN SETTINGS ###########
+\newcommand{\keywordfont}{\textsc}
+\newcommand{\keyword}[1]{%
+  \marginpar{\raggedright\small\keywordfont{#1}}}
+\reversemarginpar
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, outer=2cm, inner=3.3cm, marginparwidth=72pt, heightrounded]{geometry}
+%#################################
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{float}
+
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{Conjecture}
+
+
+
+
+\begin{document}
+
+\Large
+\begin{center}
+\textbf{MA3K7 Assignment 4}
+\\
+Alexandros Sergiou (5505826)
+\end{center}
+\normalsize
+
+\section{Entry}
+
+\keyword{I KNOW}From the assumptions in the problem,
+\begin{itemize}
+\item An opponent and I take turns placing 0s and 1s on an $n \times n$ grid
+\item I can only use 0 and my opponent 1
+\item We continue the game until the grid is full
+\item if the resulting matrix on the grid has zero determinant, I win, otherwise I lose.
+\end{itemize}
+\medskip
+
+\keyword{NOTATION}
+For brevity, I define:
+\begin{itemize}
+\item $M_i$ to be the resulting $i \times i$ matrix from the grid
+\item $r_i$ denotes the $i$th row of $M_n$,
+for $i=1,\ldots,n$.
+\item Denote $P_0$ as myself and $P_1$ as my opponent for simplicity 
+\medskip
+
+\end{itemize}
+
+\keyword{I WANT} I will investigate how the game is played and try and identify any patterns, specifically :
+\begin{itemize}
+\item Observe how the starting player affects the final outcome 
+\item How the value of $n$ affects the final outcome
+\item Try and find a winning strategy for each player 
+\end{itemize}
+
+\section{Attack}I assume that $n$ is a positive integer and that each turn fills exactly one  previously empty cell. Entries cannot be changed once placed. Since the
+question does not specify who starts,
+I will consider both starting players.
+\keyword{I KNOW} First I will consider in which ways a matrix can have zero determinant. Clearly the general rule holds, where for a matrix $M$, $\det(M) = 0 \iff$ the rows/columns of the matrix are linearly dependent. Specialising this general case, if the matrix has a zero row/column or at least two rows/ columns are identical will also give the desired result. I would therefore need to play in such a way so that i can attempt to force one of these conditions,and my opponent would clearly be working against me to prevent me from achieving this 
+
+\keyword{ATTEMPT} Perhaps splitting the game into two cases will be appropriate,as I suspect that the winner may vary depending on who starts the game.
+First consider the case $n=2$, since clearly whoever starts in the case $n=1$ will be the winner : 
+
+\textbf{Case 1:} $P_0$ moves first: 
+I will place a 0 in any position since the outcome  here is independent  of the initial move :$$ M_2 = \begin{pmatrix}
+0&?\\
+?&?
+\end{pmatrix}$$ Now my opponent will have to place a 1, but notice that regardless of where he places it, I can still make a zero row or column resulting in a zero determinant provided I place the 0 in the appropriate entry, lets skip to the final matrix after all players have taken their turns : 
+$$\begin{pmatrix}
+0&1\\
+0&1
+\end{pmatrix}$$ So $\det(M_2)=0$ and $P_0$ wins
+
+\textbf{Case 2:}$P_1$ moves first:
+Again placing the 1 anywhere as it will not matter by symmetry, so : 
+$$ M_2 = \begin{pmatrix}
+1&?\\
+?&?
+\end{pmatrix}$$ Then I will try and force a win by either making a zero column/row or two identical rows/columns resulting in
+$$ M_2 = \begin{pmatrix}
+1&?\\
+?&0
+\end{pmatrix}$$
+Notice now that I win regardless of my opponent's next move.
+\keyword{NOTICE} Thus we can deduce from the above that in the case $n =2$ $P_0$ will have a winning strategy regardless since the resulting matrix is singular in any case where I play optimally
+
+
+\medskip
+\keyword{ATTEMPT}
+
+I next considered the case $n=3$.
+Since there are nine cells, the player
+who moves first makes five moves,
+while the other makes four.
+I wondered whether this extra move
+would give the starting player an
+advantage.
+
+\textbf{Case 1:} $P_0$ moves first:
+
+In this case, the final matrix must
+contain five zeroes and four ones.
+Suppose I place a $0$ in the centre:
+
+$$
+M_3=\begin{pmatrix}
+?&?&?\\
+?&0&?\\
+?&?&?
+\end{pmatrix}.
+$$
+
+Now my opponent will try to prevent
+me from creating a singular matrix,
+so consider the following turns:
+
+$$
+\begin{pmatrix}
+?&1&?\\
+?&0&?\\
+?&?&?
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+?&1&?\\
+?&0&?\\
+?&0&?
+\end{pmatrix}.
+$$
+
+My opponent will again try to prevent
+me from creating a zero row or column,
+or two identical rows or columns.
+Suppose the game continues as follows:
+
+$$
+\begin{pmatrix}
+?&1&?\\
+?&0&1\\
+?&0&?
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+?&1&?\\
+?&0&1\\
+?&0&0
+\end{pmatrix}
+\rightarrow
+\begin{pmatrix}
+?&1&?\\
+?&0&1\\
+1&0&0
+\end{pmatrix}
+$$
+
+$$
+\rightarrow
+\begin{pmatrix}
+0&1&?\\
+?&0&1\\
+1&0&0
+\end{pmatrix}
+\rightarrow \cdots \rightarrow
+\begin{pmatrix}
+0&1&1\\
+0&0&1\\
+1&0&0
+\end{pmatrix}.
+$$
+
+The resulting matrix has determinant
+$1\neq0$, so $P_1$ wins in this case.
+
+\medskip
+\keyword{STUCK}
+
+But this has not really told me
+much, since it only shows one possible
+outcome rather than whether either
+player can guarantee a win.
+I also found that considering all the
+possible moves by hand quickly became
+tedious, even for $n=3$.
+
+\medskip
+\keyword{IDEA}
+
+Rather than considering Case 2 in the
+same way, I decided to use Python to
+investigate the game further.
+I wanted to determine
+whether either player could force a
+win for $n=3$, regardless of who
+moves first.
+
+
+\keyword{NOTE}
+Interestingly, the results suggest
+that $P_0$ can force a win for $n=3$,
+regardless of which player starts.
+This is unexpected, I will try
+to understand why this happens.
+
+\medskip
+\keyword{ATTEMPT}
+I decided to look at the determinant
+itself to aid me in solving this problem. Returning to my earlier attempt where I placed a $0$ in the centre, write
+
+$$ M_3=\begin{pmatrix}
+a&b&c\\
+d&0&f\\
+g&h&i
+\end{pmatrix}.$$
+
+Where expanding the determinant gives
+
+$$ \det(M_3)=-afh-bdi+bfg+cdh. $$
+
+Notice that I could make each
+term zero by simply ensuring that
+
+$$ af=di=bg=ch=0. $$
+
+Notice how these four products involve all eight remaining positions, with each
+position appearing exactly once.
+This led me to trying to pair entries in the matrix as follows:
+
+$$
+\begin{pmatrix}
+a&b&c\\
+d&0&a\\
+b&c&d
+\end{pmatrix}.
+$$
+
+where matching letters represent
+paired positions.
+If my opponent places a $1$ in
+one position, I can respond with
+a $0$ in its corresponding pair. This would
+ensure that each of the four
+products is zero, and hence
+$\det(M_3)=0$.
+
+\medskip
+\keyword{CHECK}
+However, this strategy assumes
+that I move first, since I need
+to place the initial $0$ in the
+centre.
+If $P_1$ starts, I cannot guarantee
+that the centre is available.
+I therefore considered whether
+I could instead place a $0$ in
+a different row and column from
+my opponent's first $1$, and
+choose my remaining moves depending
+on their responses.
+This leads to a different strategy,
+which I will justify in the
+Solution section.
+
+
+\medskip
+\keyword{STUCK}
+
+Although looking at the determinant
+worked for $n=3$, expanding it for larger matrices would become much more difficult and perhaps there's a better way.
+I therefore returned to the idea
+of making the rows linearly dependent.
+\medskip
+\keyword{IDEA}
+
+Suppose I could arrange two rows
+so that each column contains one
+$0$ and one $1$. Their sum would
+then be $(1,\ldots,1)$.
+However, this alone would not
+guarantee that the rows are
+linearly dependent.
+I wondered what would happen if
+I could do the same thing with
+another two rows so that :
+$$ r_1+r_2=r_3+r_4=(1,\ldots,1),\;\;\text{and}\;\;
+ r_1+r_2-r_3-r_4=0.$$
+This would guarantee a singular
+matrix. If I could force this
+condition then i would guarantee a win,I'll start by considering it with $n=4$.
+
+
+ Take the following pairing:
+$$
+\begin{pmatrix}
+a&b&c&d\\
+a&b&c&d\\
+e&f&g&h\\
+e&f&g&h
+\end{pmatrix}.
+$$
+If each pair contains one $0$ and one $1$, then
+$$ r_1+r_2=r_3+r_4=(1,1,1,1) \implies r_1+r_2-r_3-r_4=0$$ Thus  I will have a linear dependence resulting in a zero determinant
+
+\medskip
+\keyword{CHECK}
+If $P_1$ moves first, I can simply respond by placing a $0$ in the other position of the same pair. I noticed after some thought that this strategy will remain the same even if I start or my opponent knows the strategy and actively tries to prevent it, consider the following scenario:
+
+Suppose I begin by placing a $0$ in one position of an empty pair. If $P_1$ places their next $1$ in the other position of this
+pair, I can start another empty pair with a $0$. Otherwise, $P_1$ must place their
+$1$ in a different empty pair,
+so I can then respond by completing
+that pair with a $0$. In either case, after each of my moves, there is exactly one unfinished pair containing a $0$. Since $P_1$ makes the final move, they must eventually complete this remaining pair.
+So even if my opponent knows the strategy, they cannot prevent every pair from containing one $0$ and one $1$.
+
+\medskip
+\keyword{I WONDER}
+I then considered whether this strategy could work when $n$ is odd. For example, when $n=5$, there are $25$ positions, so I can't divide the entire grid into pairs. But my previous argument only requires four rows to be linearly dependent, so perhaps it can be applied here. This made me wonder whether I could leave one position unpaired in the fifth row, while continuing to pair the positions in the other four rows. I could then use the first move to fill the unpaired position, leaving an even number of cells.
+
+
+\keyword{ATTEMPT} I started with $n=5$:
+$$
+\begin{pmatrix}
+a&b&c&d&e\\
+a&b&c&d&e\\
+f&g&h&i&j\\
+f&g&h&i&j\\
+k&k&l&l&\star
+\end{pmatrix}.
+$$
+Here $\star$ is an unpaired position. If I move first, I can place a $0$ there and let $P_1$ start among the remaining pairs. If $P_1$ moves first, I can instead treat their first $1$ as the unpaired position and choose four other rows for my pairing strategy.
+
+\keyword{AHA} More generally, for odd $n\geq5$, there are $n(n-4)$ cells outside the four chosen rows. Since this number is odd, I can leave one cell unpaired and divide the remaining $n(n-4)-1$ cells into pairs. This suggests that $P_0$ can force a win for every $n\geq2$, regardless of who starts. I will now prove this more carefully.
+
+\section{Solution}
+
+\begin{claim}
+Suppose all remaining empty positions
+are divided into disjoint pairs. Then $P_0$ can guarantee that each pair contains one $0$ and one $1$ at the end of the game, regardless of which player starts among these positions.
+\end{claim}
+
+\begin{proof}
+If $P_1$ starts, $P_0$ always responds by placing a $0$ in the other position of the pair chosen by $P_1$. Before each move by $P_1$, every pair is either empty or complete, so the other position in the corresponding pair is always empty. Every pair will therefore eventually be completed.
+Now suppose $P_0$ starts. They place a $0$ in one position of an empty pair. After each subsequent move by $P_1$, there are two possibilities. If $P_1$ plays in an empty pair, $P_0$ fills its other position with a $0$. If $P_1$ completes the pair containing
+the one $0$ and empty positions remain,
+$P_0$ starts a new empty pair.
+Thus, after each move by $P_0$, exactly one pair contains one $0$, while all other pairs are either empty or contain one $0$ and one $1$. Since the number of positions is even, $P_1$ makes the final move and must complete the remaining pair. Hence every pair contains one $0$ and one $1$ in both cases.
+\end{proof}
+
+\medskip
+\begin{claim}
+For $n=2$, $P_0$ has a winning strategy regardless of which player starts.
+\end{claim}
+
+\begin{proof}
+By symmetry, suppose the first move is at $(1,1)$. If $P_0$ starts there, then after $P_1$'s move, $P_0$ can complete either the first row or the first column with $0$s. If $P_1$ starts there, $P_0$ places a $0$ at $(2,2)$. After $P_1$'s next move, $P_0$ can complete either the second row or the second column with $0$s. In both cases, $\det(M_2)=0$.
+\end{proof}
+
+\medskip
+\begin{claim}
+For $n=3$, $P_0$ has a winning strategy regardless of which player starts.
+\end{claim}
+
+\begin{proof}
+First suppose $P_0$ starts. They place a $0$ in the centre and use the four pairs from the Attack section. Write the final matrix as
+$$ M_3=\begin{pmatrix}a&b&c\\d&0&f\\g&h&i\end{pmatrix}.$$
+The pairing ensures that $af=bg=ch=di=0$. Expanding the determinant gives
+$$ \det(M_3)=-afh-bdi+bfg+cdh=0, $$
+since each term contains one of these zero products.
+Now suppose $P_1$ moves first. Permuting rows and columns does not affect whether the determinant is zero. Wherever $P_1$ places their first $1$, $P_0$ can place a $0$ in a different row and column. By relabelling, we can therefore write
+$$
+M_3=\begin{pmatrix}1&b&c\\d&0&f\\g&h&i\end{pmatrix},
+\qquad
+\det(M_3)=-fh-bdi+bfg+cdh,
+$$
+where the letters represent empty positions. There are two cases, depending on $P_1$'s second move.
+
+\textbf{Case 1:} $P_1$ places their second $1$ at $f$. Then $P_0$ places a $0$ at $h$, so
+$$
+\det(M_3)=b(g-di).
+$$
+If $P_1$ does not place their next $1$ at $b$, $P_0$ sets $b=0$ and the determinant is zero. Otherwise $b=1$, so $P_0$ sets $g=0$, leaving $\det(M_3)=-bdi$. Both $d$ and $i$ are still empty. Since $P_1$ has only one move before my final placement, I can make at least one of $d$ and $i$ zero. Therefore $\det(M_3)=0$.
+
+\textbf{Case 2:} $P_1$ does not place their second $1$ at $f$. Then $P_0$ places a $0$ at $f$, giving
+$$
+\det(M_3)=d(ch-bi).
+$$
+If $d$ is still empty after $P_1$'s next move, $P_0$ sets $d=0$. Otherwise $d=1$, and at most one of $b,c,h,i$ contains a $1$. Consider the pairs $(c,h)$ and $(b,i)$. If one position already contains a $1$, $P_0$ puts a $0$ in its partner; otherwise $P_0$ puts a $0$ in either pair. In either case, one pair now contains a $0$. My opponent has only one move before my final placement, so they cannot occupy both positions of the other pair. I can therefore place my final $0$ in that pair, ensuring $ch=bi=0$. Hence $\det(M_3)=0$.
+These cases cover every possible second move by $P_1$, proving the result for both starting orders.
+\end{proof}
+
+\medskip
+\begin{claim}
+For every $n\geq4$, $P_0$ has a winning strategy independent of which player starts.
+\end{claim}
+
+\begin{proof}
+Choose four rows and relabel them
+as $r_1,r_2,r_3,r_4$. Pair each position of the first row with the position in the same column of the second row as shown in the attack section. Do the same for the third and fourth rows. If every pair contains one $0$ and one $1$, then
+$$ r_1+r_2=r_3+r_4=(1,\ldots,1), $$
+and hence $r_1+r_2-r_3-r_4=0$. This would give us a linear dependence, so $det(M_n)=0$.
+
+If $n$ is even, there are $n(n-4)$ other positions, which can also be divided into pairs. Applying the first claim ensures that every pair contains one $0$ and one $1$, regardless of who moves first.
+
+If $n$ is odd, there are $n(n-4)$ other positions which will be an odd number. Leave one of these positions unpaired and pair the rest. If $P_0$ moves first, they place their $0$ in the unpaired position, chosen outside the four rows. If $P_1$ moves first, use their first position as the unpaired position and choose four other rows; this is possible since $n\geq5$. In either case, the remaining empty positions form an even number of pairs, and the first claim applies.
+Thus the four selected rows satisfy $r_1+r_2-r_3-r_4=0$ in both cases, and $\det(M_n)=0$ for every $n\geq4$.
+\end{proof}
+
+Combining these results, I obtain the following surprising conclusion:
+$$
+\boxed{\begin{array}{ll}
+n=1: & \text{the player who moves first wins},\\[2mm]
+n\geq2: & P_0\text{ has a winning strategy in both starting orders}.
+\end{array}}
+$$
+
+
+\section{Review}
+
+\keyword{CHECK}
+The results I obtained using Python
+for $n=3$ agreed with the strategies
+in the Solution section. I then tested
+the pairing strategy for $n=4$ and
+$n=5$, considering both starting
+players and three different ways
+for my opponent to choose their moves.
+I ran $500$ trials for each combination.
+In every trial, each pair contained
+one $0$ and one $1$, the two pairs
+of rows had the same sum, and the
+final matrix had zero determinant.
+This agreed with my mathematical
+results. However, the simulations
+only checked the games played,
+whereas the proofs explain why
+the strategy works regardless
+of how my opponent responds.
+
+\medskip
+\keyword{REFLECT}
+Initially, I focused on trying to
+create zero rows or columns. Although
+this worked for $n=2$, working through
+individual games for $n=3$ took a long
+time and still did not indicate which
+player could force a win.
+I had to find a different approach, so I looked directly at the determinant expansion. After taking this approach I realised that I could force certain products in the determinant to be zero without controlling every entry of the matrix.
+The most useful observation was that
+I did not need to control the entire
+matrix for larger $n$, only to force
+a linear dependence among four
+suitably chosen rows.
+
+\keyword{GENERAL}
+By forcing a linear dependence
+among just four rows, I could
+extend the strategy to arbitrary
+$n\geq4$, including odd values
+where one position had to be
+left unpaired.
+At first i just planned on investigating the various outcomes, the fact that i ended up with a general rule for every positive integer $n$ was quite a pleasant surprise.
+
+\medskip
+\keyword{EXTENSION}
+I also wondered whether the same strategy would work if the players used two fixed real numbers $a$ and $b$, instead of $0$ and $1$. For $n\geq4$, the pairing strategy
+would still allow me to ensure that each pair contains one $a$ and one $b$, regardless of who moves first. Meaning the four selected rows would satisfy
+
+$$ r_1+r_2=r_3+r_4 =(a+b,\ldots,a+b). 
+\quad
+\text{Therefore,}\;\; r_1+r_2-r_3-r_4=0,$$
+
+Implying the matrix would still be singular in this case.
+Thus, for $n\geq4$, the strategy
+does not actually depend on the
+numbers being $0$ and $1$.
+Note however,that my arguments for $n=2$
+and $n=3$ relied on those specific
+values, so this argument cannot be immediately extended to these cases.
+
+
+\section*{Code}
+The code for this assignment, can be found on my GitHub page:\\  
+\url{}
+
+
+
+\end{document}
